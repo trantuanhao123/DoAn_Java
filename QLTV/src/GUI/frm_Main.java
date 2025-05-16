@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import PANELS.PhieuMuon;
+import PANELS.TimKiem;
 import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -20,58 +22,60 @@ public class frm_Main extends javax.swing.JFrame {
      * Creates new form frm_Main
      */
     public frm_Main() {
-        initComponents();
-        initializeButtons();
-        pnMain.setLayout(new CardLayout());
-        
-        // Tạo các panel cho từng trang
-    JPanel panelTrangChu = new JPanel();
-    panelTrangChu.add(new JLabel("Đây là Trang Chủ"));
+        JPanel panelTrangChu = new JPanel();
+        JPanel panelSach = new JPanel();
+        JPanel panelSinhVien = new JPanel();
+        JPanel panelTacGia = new JPanel();
+        JPanel panelNhaXuatBan = new JPanel();
+        JPanel panelThuThu = new JPanel();
+        PhieuMuon panelPhieuMuon = null; 
+        TimKiem panelTimKiem=null;
+        JPanel panelThongKe = new JPanel();
 
-    JPanel panelSach = new JPanel();
-    panelSach.add(new JLabel("Đây là trang Sách"));
+        try {
+            initComponents();
+            initializeButtons();
+            pnMain.setLayout(new CardLayout());
 
-    JPanel panelSinhVien = new JPanel();
-    panelSinhVien.add(new JLabel("Đây là trang Sinh Viên"));
+            panelTrangChu.add(new JLabel("Đây là Trang Chủ"));
+            panelSach.add(new JLabel("Đây là trang Sách"));
+            panelSinhVien.add(new JLabel("Đây là trang Sinh Viên"));
+            panelTacGia.add(new JLabel("Đây là trang Tác Giả"));
+            panelNhaXuatBan.add(new JLabel("Đây là trang Nhà Xuất Bản"));
+            panelThuThu.add(new JLabel("Đây là trang Thủ Thư"));
+            panelPhieuMuon = new PhieuMuon(); 
+            panelTimKiem = new TimKiem();
+            panelThongKe.add(new JLabel("Đây là trang Thống Kê"));
 
-    JPanel panelTacGia = new JPanel();
-    panelTacGia.add(new JLabel("Đây là trang Tác Giả"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-    JPanel panelNhaXuatBan = new JPanel();
-    panelNhaXuatBan.add(new JLabel("Đây là trang Nhà Xuất Bản"));
+        // Thêm các panel vào pnMain với tên định danh
+        CardLayout cl = (CardLayout) pnMain.getLayout();
+        pnMain.add(panelTrangChu, "TrangChu");
+        pnMain.add(panelSach, "Sach");
+        pnMain.add(panelSinhVien, "SinhVien");
+        pnMain.add(panelTacGia, "TacGia");
+        pnMain.add(panelNhaXuatBan, "NhaXuatBan");
+        pnMain.add(panelThuThu, "ThuThu");
 
-    JPanel panelThuThu = new JPanel();
-    panelThuThu.add(new JLabel("Đây là trang Thủ Thư"));
-
-    JPanel panelPhieuMuon = new JPanel();
-    panelPhieuMuon.add(new JLabel("Đây là trang Phiếu Mượn"));
-
-    JPanel panelPhieuNhap = new JPanel();
-    panelPhieuNhap.add(new JLabel("Đây là trang Phiếu Nhập"));
-
-    JPanel panelThongKe = new JPanel();
-    panelThongKe.add(new JLabel("Đây là trang Thống Kê"));
-
-    // Thêm các panel vào pnMain với tên định danh
-    CardLayout cl = (CardLayout) pnMain.getLayout();
-    pnMain.add(panelTrangChu, "TrangChu");
-    pnMain.add(panelSach, "Sach");
-    pnMain.add(panelSinhVien, "SinhVien");
-    pnMain.add(panelTacGia, "TacGia");
-    pnMain.add(panelNhaXuatBan, "NhaXuatBan");
-    pnMain.add(panelThuThu, "ThuThu");
-    pnMain.add(panelPhieuMuon, "PhieuMuon");
-    pnMain.add(panelPhieuNhap, "PhieuNhap");
-    pnMain.add(panelThongKe, "ThongKe");
-
+        // Kiểm tra null trước khi add PhieuMuon (tránh lỗi nếu tạo thất bại)
+        if (panelPhieuMuon != null) {
+            pnMain.add(panelPhieuMuon, "PhieuMuon");
+        }
+        if(panelTimKiem !=null){
+            pnMain.add(panelTimKiem, "TimKiem");
+        }
+        pnMain.add(panelThongKe, "ThongKe");
     }
     
     // Khai báo mảng chứa các nút
     private JButton[] buttons;
 
     private void initializeButtons() {
-        buttons = new JButton[] {
-            btnDangXuat, btnNhaXuatBan, btnPhieuMuon, btnPhieuNhap, btnSach,
+        buttons = new JButton[]{
+            btnDangXuat, btnNhaXuatBan, btnPhieuMuon, btnTimKiem, btnSach,
             btnSinhVien, btnTacGia, btnThongKe, btnThuThu, btnTrangChu
         };
     }
@@ -82,9 +86,6 @@ public class frm_Main extends javax.swing.JFrame {
             btn.setBackground(null); // Hoặc btn.setBackground(Color.DEFAULT nếu bạn định nghĩa
         }
     }
-    
-    
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,7 +104,7 @@ public class frm_Main extends javax.swing.JFrame {
         btnNhaXuatBan = new javax.swing.JButton();
         btnThuThu = new javax.swing.JButton();
         btnPhieuMuon = new javax.swing.JButton();
-        btnPhieuNhap = new javax.swing.JButton();
+        btnTimKiem = new javax.swing.JButton();
         btnDangXuat = new javax.swing.JButton();
         btnThongKe = new javax.swing.JButton();
         btnTrangChu = new javax.swing.JButton();
@@ -220,20 +221,20 @@ public class frm_Main extends javax.swing.JFrame {
             }
         });
 
-        btnPhieuNhap.setBackground(new java.awt.Color(51, 51, 51));
-        btnPhieuNhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnPhieuNhap.setForeground(new java.awt.Color(255, 255, 255));
-        btnPhieuNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/phieunhap.png"))); // NOI18N
-        btnPhieuNhap.setText("Phiếu Nhập");
-        btnPhieuNhap.setBorder(null);
-        btnPhieuNhap.setContentAreaFilled(false);
-        btnPhieuNhap.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnPhieuNhap.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnPhieuNhap.setIconTextGap(20);
-        btnPhieuNhap.setOpaque(true);
-        btnPhieuNhap.addActionListener(new java.awt.event.ActionListener() {
+        btnTimKiem.setBackground(new java.awt.Color(51, 51, 51));
+        btnTimKiem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnTimKiem.setForeground(new java.awt.Color(255, 255, 255));
+        btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/search.png"))); // NOI18N
+        btnTimKiem.setText("Tìm Kiếm");
+        btnTimKiem.setBorder(null);
+        btnTimKiem.setContentAreaFilled(false);
+        btnTimKiem.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnTimKiem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnTimKiem.setIconTextGap(20);
+        btnTimKiem.setOpaque(true);
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPhieuNhapActionPerformed(evt);
+                btnTimKiemActionPerformed(evt);
             }
         });
 
@@ -298,7 +299,7 @@ public class frm_Main extends javax.swing.JFrame {
                 .addGroup(pnFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnFullLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(pnLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
+                        .addComponent(pnLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnSinhVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnTrangChu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -308,9 +309,10 @@ public class frm_Main extends javax.swing.JFrame {
                     .addComponent(btnPhieuMuon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDangXuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPhieuNhap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnMain, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTimKiem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(pnMain, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         pnFullLayout.setVerticalGroup(
             pnFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,7 +334,7 @@ public class frm_Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPhieuMuon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnPhieuNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
@@ -347,7 +349,9 @@ public class frm_Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        frm_Login login = new frm_Login();
+        login.setVisible(true);
     }//GEN-LAST:event_btnDangXuatActionPerformed
 
     private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
@@ -357,12 +361,12 @@ public class frm_Main extends javax.swing.JFrame {
         cl.show(pnMain, "ThongKe");
     }//GEN-LAST:event_btnThongKeActionPerformed
 
-    private void btnPhieuNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhieuNhapActionPerformed
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         resetButtonColors();
-        btnPhieuNhap.setBackground(Color.BLUE);
+        btnTimKiem.setBackground(Color.BLUE);
         CardLayout cl = (CardLayout) pnMain.getLayout();
-    cl.show(pnMain, "PhieuNhap");
-    }//GEN-LAST:event_btnPhieuNhapActionPerformed
+        cl.show(pnMain, "TimKiem");
+    }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void btnPhieuMuonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhieuMuonActionPerformed
         resetButtonColors();
@@ -446,20 +450,20 @@ public class frm_Main extends javax.swing.JFrame {
                 new frm_Main().setVisible(true);
             }
         });
-        
+
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangXuat;
     private javax.swing.JButton btnNhaXuatBan;
     private javax.swing.JButton btnPhieuMuon;
-    private javax.swing.JButton btnPhieuNhap;
     private javax.swing.JButton btnSach;
     private javax.swing.JButton btnSinhVien;
     private javax.swing.JButton btnTacGia;
     private javax.swing.JButton btnThongKe;
     private javax.swing.JButton btnThuThu;
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnTrangChu;
     private javax.swing.JPanel pnFull;
     private javax.swing.JLabel pnLeft;

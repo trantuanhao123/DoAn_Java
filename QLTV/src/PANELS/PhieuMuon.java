@@ -1,8 +1,8 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package GUI;
+package PANELS;
 
 import DAO.phieuDAO;
 import DAO.chitietphieuDAO;
@@ -16,14 +16,14 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author KIET
+ * @author HAO
  */
-public class frm_MuonTraSach extends javax.swing.JFrame {
+public class PhieuMuon extends javax.swing.JPanel {
 
     /**
-     * Creates new form frm_MuonTraSach
+     * Creates new form PhieuMuon
      */
-    public frm_MuonTraSach() throws Exception {
+    public PhieuMuon() throws Exception{
         initComponents();
         loadPhieuTable();
         loadChiTietPhieuTable();
@@ -73,7 +73,6 @@ public class frm_MuonTraSach extends javax.swing.JFrame {
         }
         return true;
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -109,8 +108,6 @@ public class frm_MuonTraSach extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtSoLuong = new javax.swing.JTextField();
         txtMaThuThu = new javax.swing.JTextField();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Mã Sinh Viên:");
 
@@ -168,6 +165,11 @@ public class frm_MuonTraSach extends javax.swing.JFrame {
         });
 
         btnTim.setText("Tìm");
+        btnTim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimActionPerformed(evt);
+            }
+        });
 
         tblChiTietPhieu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -300,8 +302,8 @@ public class frm_MuonTraSach extends javax.swing.JFrame {
                         .addGap(53, 53, 53))))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -316,39 +318,7 @@ public class frm_MuonTraSach extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tblPhieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPhieuMouseClicked
-        int row = tblPhieu.getSelectedRow();
-        int maPhieu = Integer.parseInt(tblPhieu.getValueAt(row, 0).toString());
-
-        // Gán dữ liệu từ bảng Phieu
-        txtMaPhieu.setText(String.valueOf(maPhieu));
-        txtMaSV.setText(tblPhieu.getValueAt(row, 1).toString());
-        txtNgayMuon.setText(tblPhieu.getValueAt(row, 2).toString());
-        txtMaThuThu.setText(tblPhieu.getValueAt(row, 4).toString());
-
-        String trangThai = tblPhieu.getValueAt(row, 3).toString();
-        rbtnDangMuon.setSelected(trangThai.equals("Đang mượn"));
-        rbtnDaTra.setSelected(trangThai.equals("Đã trả"));
-
-        try {
-            loadChiTietPhieuTable();
-            chitietphieuDAO dao = new chitietphieuDAO();
-            ChiTietPhieu ct = dao.findByMaPhieu(maPhieu); 
-
-            if (ct != null) {
-                txtMaSach.setText(String.valueOf(ct.getMaSach()));
-                txtSoLuong.setText(String.valueOf(ct.getSoLuongMuon()));
-                txtNgayTra.setText(ct.getNgayTra());
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(frm_MuonTraSach.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_tblPhieuMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
@@ -384,6 +354,36 @@ public class frm_MuonTraSach extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Lỗi khi thêm phiếu!");
         }
     }//GEN-LAST:event_btnThemActionPerformed
+
+    private void tblPhieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPhieuMouseClicked
+        int row = tblPhieu.getSelectedRow();
+        int maPhieu = Integer.parseInt(tblPhieu.getValueAt(row, 0).toString());
+
+        // Gán dữ liệu từ bảng Phieu
+        txtMaPhieu.setText(String.valueOf(maPhieu));
+        txtMaSV.setText(tblPhieu.getValueAt(row, 1).toString());
+        txtNgayMuon.setText(tblPhieu.getValueAt(row, 2).toString());
+        txtMaThuThu.setText(tblPhieu.getValueAt(row, 4).toString());
+
+        String trangThai = tblPhieu.getValueAt(row, 3).toString();
+        rbtnDangMuon.setSelected(trangThai.equals("Đang mượn"));
+        rbtnDaTra.setSelected(trangThai.equals("Đã trả"));
+
+        try {
+            loadChiTietPhieuTable();
+            chitietphieuDAO dao = new chitietphieuDAO();
+            ChiTietPhieu ct = dao.findByMaPhieu(maPhieu);
+
+            if (ct != null) {
+                txtMaSach.setText(String.valueOf(ct.getMaSach()));
+                txtSoLuong.setText(String.valueOf(ct.getSoLuongMuon()));
+                txtNgayTra.setText(ct.getNgayTra());
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(PhieuMuon.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tblPhieuMouseClicked
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
@@ -427,9 +427,9 @@ public class frm_MuonTraSach extends javax.swing.JFrame {
         }
 
         int confirm = JOptionPane.showConfirmDialog(this,
-                "Bạn có chắc muốn xóa phiếu này?",
-                "Xác nhận xóa",
-                JOptionPane.YES_NO_OPTION);
+            "Bạn có chắc muốn xóa phiếu này?",
+            "Xác nhận xóa",
+            JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
             try {
@@ -459,44 +459,10 @@ public class frm_MuonTraSach extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnXoaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frm_MuonTraSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frm_MuonTraSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frm_MuonTraSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frm_MuonTraSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTimActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new frm_MuonTraSach().setVisible(true);
-                } catch (Exception ex) {
-                    Logger.getLogger(frm_MuonTraSach.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSua;

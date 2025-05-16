@@ -4,6 +4,7 @@
  */
 package dao;
 
+import DAO.KetNoiCSDL;
 import java.sql.*;
 import MODELS.ThuThu;
 
@@ -16,7 +17,7 @@ public class userDao {
     public ThuThu checkLogin(String email, String maThuThu) throws Exception {
         String sql = "SELECT Email, maThuThu FROM ThuThu WHERE Email = ? AND maThuThu = ?";
         try (
-            Connection con = KetNoiCSDL.openConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+            Connection con = KetNoiCSDL.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, email);
             pstmt.setString(2, maThuThu);
             try (ResultSet rs = pstmt.executeQuery()) {
