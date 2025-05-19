@@ -7,7 +7,7 @@ package PANELS;
 import DAO.KetNoiCSDL;
 import DAO.timKiemDao;
 import MODELS.Phieu;
-import MODELS.Sach;
+import MODELS.SachDTO;
 import java.sql.*;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -45,9 +45,9 @@ public class TimKiem extends javax.swing.JPanel {
         };
         model.setColumnIdentifiers(new String[]{"Mã Sách", "Tên Sách", "Tác Giả", "Năm XB", "Tên NXB", "Tên Thể Loại", "Số Lượng", "Hình Ảnh"});
         try {
-            List<Sach> list = dao.searchSach(key);
+            List<SachDTO> list = dao.searchSach(key);
             try (Connection con = KetNoiCSDL.getConnection()) {
-                for (Sach s : list) {
+                for (SachDTO s : list) {
                     ImageIcon icon = null;
                     String hinhAnh = s.getHinhAnh();
 

@@ -5,7 +5,7 @@
 package DAO;
 
 import MODELS.Phieu;
-import MODELS.Sach;
+import MODELS.SachDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,21 +18,21 @@ import java.util.List;
  */
 public class timKiemDao {
 
-    public List<Sach> searchSach(String key) throws Exception {
+    public List<SachDTO> searchSach(String key) throws Exception {
         String sql = "SELECT s.MaSach, s.TenSach, s.TacGia, s.NamXB, s.MaNXB, s.MaTheLoai, s.SoLuong, s.HinhAnh, "
                 + "nxb.TenNXB, tl.TenTheLoai "
                 + "FROM Sach s "
                 + "LEFT JOIN NhaXuatBan nxb ON s.MaNXB = nxb.MaNXB "
                 + "LEFT JOIN TheLoai tl ON s.MaTheLoai = tl.MaTheLoai "
                 + "WHERE s.TenSach LIKE ?";
-        List<Sach> list = new ArrayList<>();
+        List<SachDTO> list = new ArrayList<>();
         try (
                 Connection con = KetNoiCSDL.getConnection(); PreparedStatement pstm = con.prepareStatement(sql)) {
             pstm.setString(1, "%" + key + "%");
 
             try (ResultSet rs = pstm.executeQuery()) {
                 while (rs.next()) {
-                    Sach sach = new Sach();
+                    SachDTO sach = new SachDTO();
                     sach.setMaSach(rs.getInt("MaSach"));
                     sach.setTenSach(rs.getString("TenSach"));
                     sach.setTacGia(rs.getString("TacGia"));

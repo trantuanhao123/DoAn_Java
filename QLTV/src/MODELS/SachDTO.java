@@ -6,16 +6,17 @@ package MODELS;
 
 /**
  *
- * @author HAO
+ * @author ACER
  */
-public class Sach {
+public class SachDTO {
     private int maSach,theLoai,NXB,namXB,soLuong; 
     private String tenSach,tacGia,hinhAnh;
     
-    public Sach() {
+    public SachDTO(){
+        
     }
-
-    public Sach(int maSach, int theLoai, int NXB, int namXB, int soLuong, String tenSach, String tacGia, String hinhAnh) {
+    
+    public SachDTO(int maSach, int theLoai, int NXB, int namXB, int soLuong, String tenSach, String tacGia, String hinhAnh) {
         this.maSach = maSach;
         this.theLoai = theLoai;
         this.NXB = NXB;
@@ -89,7 +90,4 @@ public class Sach {
     public void setHinhAnh(String hinhAnh) {
         this.hinhAnh = hinhAnh;
     }
-
-    
-    
 }

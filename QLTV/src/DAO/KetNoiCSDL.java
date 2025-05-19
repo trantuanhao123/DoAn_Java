@@ -20,6 +20,7 @@ public class KetNoiCSDL {
                 String user = "sa";
                 String password = "123";
                 conn = DriverManager.getConnection(url, user, password);
+                System.out.println("ket noi thanh cong");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
