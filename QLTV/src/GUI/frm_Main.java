@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import PANELS.NXB;
 import PANELS.PhieuMuon;
 import PANELS.Sach;
 import PANELS.TimKiem;
@@ -27,7 +28,7 @@ public class frm_Main extends javax.swing.JFrame {
         JPanel panelSach = new JPanel();
         JPanel panelSinhVien = new JPanel();
         JPanel panelTacGia = new JPanel();
-        JPanel panelNhaXuatBan = new JPanel();
+        NXB panelNhaXuatBan = null;
         JPanel panelThuThu = new JPanel();
         PhieuMuon panelPhieuMuon = null; 
         TimKiem panelTimKiem=null;
@@ -42,7 +43,7 @@ public class frm_Main extends javax.swing.JFrame {
             panelSach = new Sach();
             panelSinhVien.add(new JLabel("Đây là trang Sinh Viên"));
             panelTacGia.add(new JLabel("Đây là trang Tác Giả"));
-            panelNhaXuatBan.add(new JLabel("Đây là trang Nhà Xuất Bản"));
+            panelNhaXuatBan= new NXB();
             panelThuThu.add(new JLabel("Đây là trang Thủ Thư"));
             panelPhieuMuon = new PhieuMuon(); 
             panelTimKiem = new TimKiem();
@@ -58,15 +59,17 @@ public class frm_Main extends javax.swing.JFrame {
         pnMain.add(panelSach, "Sach");
         pnMain.add(panelSinhVien, "SinhVien");
         pnMain.add(panelTacGia, "TacGia");
-        pnMain.add(panelNhaXuatBan, "NhaXuatBan");
         pnMain.add(panelThuThu, "ThuThu");
 
-        // Kiểm tra null trước khi add PhieuMuon (tránh lỗi nếu tạo thất bại)
+      
         if (panelPhieuMuon != null) {
             pnMain.add(panelPhieuMuon, "PhieuMuon");
         }
         if(panelTimKiem !=null){
             pnMain.add(panelTimKiem, "TimKiem");
+        }
+        if(panelNhaXuatBan!=null){
+            pnMain.add(panelNhaXuatBan,"NhaXuatBan");
         }
         pnMain.add(panelThongKe, "ThongKe");
     }
