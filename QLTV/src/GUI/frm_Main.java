@@ -7,6 +7,7 @@ package GUI;
 import PANELS.PhieuMuon;
 import PANELS.Sach;
 import PANELS.TimKiem;
+import PANELS.ThongKe;
 import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -29,9 +30,9 @@ public class frm_Main extends javax.swing.JFrame {
         JPanel panelTacGia = new JPanel();
         JPanel panelNhaXuatBan = new JPanel();
         JPanel panelThuThu = new JPanel();
-        PhieuMuon panelPhieuMuon = null; 
-        TimKiem panelTimKiem=null;
-        JPanel panelThongKe = new JPanel();
+        PhieuMuon panelPhieuMuon = null;
+        TimKiem panelTimKiem = null;
+        ThongKe panelThongKe = null;
 
         try {
             initComponents();
@@ -44,9 +45,9 @@ public class frm_Main extends javax.swing.JFrame {
             panelTacGia.add(new JLabel("Đây là trang Tác Giả"));
             panelNhaXuatBan.add(new JLabel("Đây là trang Nhà Xuất Bản"));
             panelThuThu.add(new JLabel("Đây là trang Thủ Thư"));
-            panelPhieuMuon = new PhieuMuon(); 
+            panelPhieuMuon = new PhieuMuon();
             panelTimKiem = new TimKiem();
-            panelThongKe.add(new JLabel("Đây là trang Thống Kê"));
+            panelThongKe = new ThongKe();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,12 +66,12 @@ public class frm_Main extends javax.swing.JFrame {
         if (panelPhieuMuon != null) {
             pnMain.add(panelPhieuMuon, "PhieuMuon");
         }
-        if(panelTimKiem !=null){
+        if (panelTimKiem != null) {
             pnMain.add(panelTimKiem, "TimKiem");
         }
         pnMain.add(panelThongKe, "ThongKe");
     }
-    
+
     // Khai báo mảng chứa các nút
     private JButton[] buttons;
 
