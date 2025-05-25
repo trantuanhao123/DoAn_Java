@@ -9,6 +9,7 @@ import PANELS.PhieuMuon;
 import PANELS.Sach;
 import PANELS.TimKiem;
 import PANELS.ThongKe;
+import PANELS.ThuThuPanel;
 import PANELS.TrangChu;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -46,7 +47,7 @@ public class frm_Main extends javax.swing.JFrame {
             panelSinhVien.add(new JLabel("Đây là trang Sinh Viên"));
             panelTacGia.add(new JLabel("Đây là trang Tác Giả"));
             panelNhaXuatBan= new NXB();
-            panelThuThu.add(new JLabel("Đây là trang Thủ Thư"));
+            panelThuThu = new ThuThuPanel();
             panelPhieuMuon = new PhieuMuon();
             panelTimKiem = new TimKiem();
             panelThongKe = new ThongKe();
