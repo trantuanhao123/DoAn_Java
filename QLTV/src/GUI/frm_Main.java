@@ -8,6 +8,8 @@ import PANELS.NXB;
 import PANELS.PhieuMuon;
 import PANELS.Sach;
 import PANELS.TimKiem;
+import PANELS.ThongKe;
+import PANELS.ThuThuPanel;
 import PANELS.TrangChu;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -31,9 +33,9 @@ public class frm_Main extends javax.swing.JFrame {
         JPanel panelTacGia = new JPanel();
         NXB panelNhaXuatBan = null;
         JPanel panelThuThu = new JPanel();
-        PhieuMuon panelPhieuMuon = null; 
-        TimKiem panelTimKiem=null;
-        JPanel panelThongKe = new JPanel();
+        PhieuMuon panelPhieuMuon = null;
+        TimKiem panelTimKiem = null;
+        ThongKe panelThongKe = null;
 
         try {
             initComponents();
@@ -45,10 +47,10 @@ public class frm_Main extends javax.swing.JFrame {
             panelSinhVien.add(new JLabel("Đây là trang Sinh Viên"));
             panelTacGia.add(new JLabel("Đây là trang Tác Giả"));
             panelNhaXuatBan= new NXB();
-            panelThuThu.add(new JLabel("Đây là trang Thủ Thư"));
-            panelPhieuMuon = new PhieuMuon(); 
+            panelThuThu = new ThuThuPanel();
+            panelPhieuMuon = new PhieuMuon();
             panelTimKiem = new TimKiem();
-            panelThongKe.add(new JLabel("Đây là trang Thống Kê"));
+            panelThongKe = new ThongKe();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +68,7 @@ public class frm_Main extends javax.swing.JFrame {
         if (panelPhieuMuon != null) {
             pnMain.add(panelPhieuMuon, "PhieuMuon");
         }
-        if(panelTimKiem !=null){
+        if (panelTimKiem != null) {
             pnMain.add(panelTimKiem, "TimKiem");
         }
         if(panelNhaXuatBan!=null){
@@ -74,7 +76,7 @@ public class frm_Main extends javax.swing.JFrame {
         }
         pnMain.add(panelThongKe, "ThongKe");
     }
-    
+
     // Khai báo mảng chứa các nút
     private JButton[] buttons;
 
