@@ -19,7 +19,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 /**
  *
- * @author THIS PC
+ * @author Kiet
  */
 public class ThongKe extends javax.swing.JPanel {
     private ThongKeDAO thongKeDAO;

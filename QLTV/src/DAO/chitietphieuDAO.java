@@ -61,7 +61,11 @@ public class chitietphieuDAO {
             stmt.setInt(1, ct.getMaPhieu());
             stmt.setInt(2, ct.getMaSach());
             stmt.setInt(3, ct.getSoLuongMuon());
-            stmt.setString(4, ct.getNgayTra());
+            if (ct.getNgayTra() == null || ct.getNgayTra().trim().isEmpty()) {
+                stmt.setNull(4, java.sql.Types.DATE);
+            } else {
+                stmt.setString(4, ct.getNgayTra());
+            }
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -97,4 +101,19 @@ public class chitietphieuDAO {
             e.printStackTrace();
         }
     }
+
+    public int countBooksBorrowedByStudent(int maSV) throws Exception {
+        String sql = "SELECT SUM(soLuongMuon) AS total FROM ChiTietPhieu ct "
+                + "JOIN Phieu p ON ct.maPhieu = p.maPhieu "
+                + "WHERE p.maSV = ? AND p.trangThai = N'Đang mượn'";
+        try (Connection conn = KetNoiCSDL.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, maSV);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        }
+        return 0;
+    }
+
 }

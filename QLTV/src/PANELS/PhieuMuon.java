@@ -16,14 +16,14 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author HAO
+ * @author Kiet
  */
 public class PhieuMuon extends javax.swing.JPanel {
 
     /**
      * Creates new form PhieuMuon
      */
-    public PhieuMuon() throws Exception{
+    public PhieuMuon() throws Exception {
         initComponents();
         loadPhieuTable();
         loadChiTietPhieuTable();
@@ -73,6 +73,7 @@ public class PhieuMuon extends javax.swing.JPanel {
         }
         return true;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -319,8 +320,20 @@ public class PhieuMuon extends javax.swing.JPanel {
         }
 
         try {
+            int maSV = Integer.parseInt(txtMaSV.getText());
+            int soLuongMuonMoi = txtSoLuong.getText().isEmpty() ? 0 : Integer.parseInt(txtSoLuong.getText());
+
+            chitietphieuDAO ctDao = new chitietphieuDAO();
+            int tongSoLuongDangMuon = ctDao.countBooksBorrowedByStudent(maSV);
+
+            if (tongSoLuongDangMuon + soLuongMuonMoi > 3) {
+                JOptionPane.showMessageDialog(this,
+                        "Sinh viên này đã mượn " + tongSoLuongDangMuon + " cuốn. Không thể mượn thêm " + soLuongMuonMoi + " cuốn (tối đa 3 cuốn)!");
+                return;
+            }
+
             Phieu p = new Phieu();
-            p.setMaSV(Integer.parseInt(txtMaSV.getText()));
+            p.setMaSV(maSV);
             p.setNgayMuon(txtNgayMuon.getText());
             p.setTrangThai(rbtnDangMuon.isSelected() ? "Đang mượn" : "Đã trả");
             p.setMaThuThu(Integer.parseInt(txtMaThuThu.getText()));
@@ -328,19 +341,45 @@ public class PhieuMuon extends javax.swing.JPanel {
             phieuDAO dao = new phieuDAO();
             dao.insert(p);
 
-            if (!txtMaSach.getText().isEmpty() && !txtSoLuong.getText().isEmpty()) {
+            if (soLuongMuonMoi > 0) {
                 ChiTietPhieu ct = new ChiTietPhieu();
                 ct.setMaPhieu(p.getMaPhieu());
                 ct.setMaSach(Integer.parseInt(txtMaSach.getText()));
-                ct.setSoLuongMuon(Integer.parseInt(txtSoLuong.getText()));
-                ct.setNgayTra(txtNgayTra.getText());
-                chitietphieuDAO ctDao = new chitietphieuDAO();
+                ct.setSoLuongMuon(soLuongMuonMoi);
+
+                String ngayTra = txtNgayTra.getText().trim();
+                String ngayMuon = txtNgayMuon.getText().trim();
+                java.time.LocalDate ngayMuonDate = java.time.LocalDate.parse(ngayMuon);
+
+                if (ngayTra.isEmpty()) {
+                    // Tự động gán ngày trả là 7 ngày sau ngày mượn
+                    java.time.LocalDate ngayTraAuto = ngayMuonDate.plusDays(7);
+                    ct.setNgayTra(ngayTraAuto.toString());
+                } else {
+                    // Kiểm tra định dạng ngày trả có hợp lệ (yyyy-MM-dd)
+                    if (!ngayTra.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                        JOptionPane.showMessageDialog(this, "Ngày trả không hợp lệ. Định dạng đúng là yyyy-MM-dd!");
+                        return;
+                    }
+
+                    java.time.LocalDate ngayTraDate = java.time.LocalDate.parse(ngayTra);
+                    long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(ngayMuonDate, ngayTraDate);
+
+                    if (daysBetween > 14) {
+                        JOptionPane.showMessageDialog(this, "Không được mượn quá 14 ngày kể từ ngày mượn!");
+                        return;
+                    }
+
+                    ct.setNgayTra(ngayTra);
+                }
+
                 ctDao.insert(ct);
             }
 
             JOptionPane.showMessageDialog(null, "Thêm phiếu thành công!");
             loadPhieuTable();
             loadChiTietPhieuTable();
+
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi khi thêm phiếu!");
@@ -419,9 +458,9 @@ public class PhieuMuon extends javax.swing.JPanel {
         }
 
         int confirm = JOptionPane.showConfirmDialog(this,
-            "Bạn có chắc muốn xóa phiếu này?",
-            "Xác nhận xóa",
-            JOptionPane.YES_NO_OPTION);
+                "Bạn có chắc muốn xóa phiếu này?",
+                "Xác nhận xóa",
+                JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
             try {

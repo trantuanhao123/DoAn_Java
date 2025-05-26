@@ -37,18 +37,6 @@ public class phieuDAO {
         return list;
     }
 
-//    public void insert(Phieu p) throws Exception {
-//        String sql = "INSERT INTO Phieu(maSV, ngayMuon, trangThai, maThuThu) VALUES (?, ?, ?, ?)";
-//
-//        try (Connection conn = KetNoiCSDL.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-//
-//            stmt.setInt(1, p.getMaSV());
-//            stmt.setString(2, p.getNgayMuon());
-//            stmt.setInt(3, p.getMaThuThu());
-//            stmt.setString(4, p.getTrangThai());
-//            stmt.executeUpdate();
-//        }
-//    }
 public void insert(Phieu p) throws Exception {
     String sql = "INSERT INTO Phieu(maSV, ngayMuon, trangThai,maThuThu) VALUES (?, ?, ?, ?)";
     try (Connection conn = KetNoiCSDL.getConnection();
