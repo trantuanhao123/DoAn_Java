@@ -7,6 +7,7 @@ package GUI;
 import PANELS.NXB;
 import PANELS.PhieuMuon;
 import PANELS.Sach;
+import PANELS.SinhVienPanel;
 import PANELS.TimKiem;
 import PANELS.ThongKe;
 import PANELS.ThuThuPanel;
@@ -29,7 +30,7 @@ public class frm_Main extends javax.swing.JFrame {
     public frm_Main() {
         JPanel panelTrangChu = new JPanel();
         JPanel panelSach = new JPanel();
-        JPanel panelSinhVien = new JPanel();
+        SinhVienPanel panelSinhVien = null;
         JPanel panelTacGia = new JPanel();
         NXB panelNhaXuatBan = null;
         JPanel panelThuThu = new JPanel();
@@ -44,7 +45,7 @@ public class frm_Main extends javax.swing.JFrame {
 
             panelTrangChu = new TrangChu();
             panelSach = new Sach();
-            panelSinhVien.add(new JLabel("Đây là trang Sinh Viên"));
+            panelSinhVien= new SinhVienPanel();
             panelTacGia.add(new JLabel("Đây là trang Tác Giả"));
             panelNhaXuatBan= new NXB();
             panelThuThu = new ThuThuPanel();
@@ -60,11 +61,11 @@ public class frm_Main extends javax.swing.JFrame {
         CardLayout cl = (CardLayout) pnMain.getLayout();
         pnMain.add(panelTrangChu, "TrangChu");
         pnMain.add(panelSach, "Sach");
-        pnMain.add(panelSinhVien, "SinhVien");
         pnMain.add(panelTacGia, "TacGia");
         pnMain.add(panelThuThu, "ThuThu");
-
-      
+        if(panelSinhVien!=null){
+            pnMain.add(panelSinhVien,"SinhVien");
+        }
         if (panelPhieuMuon != null) {
             pnMain.add(panelPhieuMuon, "PhieuMuon");
         }
@@ -83,7 +84,7 @@ public class frm_Main extends javax.swing.JFrame {
     private void initializeButtons() {
         buttons = new JButton[]{
             btnDangXuat, btnNhaXuatBan, btnPhieuMuon, btnTimKiem, btnSach,
-            btnSinhVien, btnTacGia, btnThongKe, btnThuThu, btnTrangChu
+            btnSinhVien, btnThongKe, btnThuThu, btnTrangChu
         };
     }
 
@@ -106,7 +107,6 @@ public class frm_Main extends javax.swing.JFrame {
         pnFull = new javax.swing.JPanel();
         btnSach = new javax.swing.JButton();
         btnSinhVien = new javax.swing.JButton();
-        btnTacGia = new javax.swing.JButton();
         pnLeft = new javax.swing.JLabel();
         btnNhaXuatBan = new javax.swing.JButton();
         btnThuThu = new javax.swing.JButton();
@@ -144,7 +144,7 @@ public class frm_Main extends javax.swing.JFrame {
         btnSinhVien.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSinhVien.setForeground(new java.awt.Color(255, 255, 255));
         btnSinhVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Readericon.png"))); // NOI18N
-        btnSinhVien.setText("Sinh Viên");
+        btnSinhVien.setText("Thẻ Thư Viện");
         btnSinhVien.setBorder(null);
         btnSinhVien.setContentAreaFilled(false);
         btnSinhVien.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -154,22 +154,6 @@ public class frm_Main extends javax.swing.JFrame {
         btnSinhVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSinhVienActionPerformed(evt);
-            }
-        });
-
-        btnTacGia.setBackground(new java.awt.Color(51, 51, 51));
-        btnTacGia.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnTacGia.setForeground(new java.awt.Color(255, 255, 255));
-        btnTacGia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Tacgia.png"))); // NOI18N
-        btnTacGia.setText("Tác Giả");
-        btnTacGia.setBorder(null);
-        btnTacGia.setContentAreaFilled(false);
-        btnTacGia.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnTacGia.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnTacGia.setOpaque(true);
-        btnTacGia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTacGiaActionPerformed(evt);
             }
         });
 
@@ -303,22 +287,23 @@ public class frm_Main extends javax.swing.JFrame {
         pnFullLayout.setHorizontalGroup(
             pnFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnFullLayout.createSequentialGroup()
-                .addGroup(pnFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pnFullLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnSinhVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnTrangChu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnTacGia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnThuThu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPhieuMuon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDangXuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnTimKiem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnNhaXuatBan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnMain, javax.swing.GroupLayout.PREFERRED_SIZE, 1030, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnPhieuMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNhaXuatBan)
+                    .addGroup(pnFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(pnFullLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(pnLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnSinhVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTrangChu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnThuThu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDangXuat, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                        .addComponent(btnTimKiem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(pnMain, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         pnFullLayout.setVerticalGroup(
             pnFullLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,24 +316,22 @@ public class frm_Main extends javax.swing.JFrame {
                 .addComponent(btnSach)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSinhVien)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTacGia)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnNhaXuatBan, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnThuThu)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPhieuMuon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDangXuat)
-                .addContainerGap())
+                .addGap(30, 30, 30))
             .addGroup(pnFullLayout.createSequentialGroup()
                 .addComponent(pnMain, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnFull, "card2");
@@ -396,13 +379,6 @@ public class frm_Main extends javax.swing.JFrame {
         CardLayout cl = (CardLayout) pnMain.getLayout();
         cl.show(pnMain, "NhaXuatBan");
     }//GEN-LAST:event_btnNhaXuatBanActionPerformed
-
-    private void btnTacGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTacGiaActionPerformed
-        resetButtonColors();
-        btnTacGia.setBackground(Color.BLUE);
-        CardLayout cl = (CardLayout) pnMain.getLayout();
-        cl.show(pnMain, "TacGia");
-    }//GEN-LAST:event_btnTacGiaActionPerformed
 
     private void btnSinhVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinhVienActionPerformed
         resetButtonColors();
@@ -468,7 +444,6 @@ public class frm_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnPhieuMuon;
     private javax.swing.JButton btnSach;
     private javax.swing.JButton btnSinhVien;
-    private javax.swing.JButton btnTacGia;
     private javax.swing.JButton btnThongKe;
     private javax.swing.JButton btnThuThu;
     private javax.swing.JButton btnTimKiem;
