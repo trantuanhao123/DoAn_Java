@@ -8,6 +8,7 @@ import DAO.KetNoiCSDL;
 import DAO.timKiemDao;
 import MODELS.Phieu;
 import MODELS.SachDTO;
+import MODELS.SinhVien;
 import java.sql.*;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -203,7 +204,7 @@ public class TimKiem extends javax.swing.JPanel {
             }
         });
 
-        cbType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sách", "Phiếu Mượn", "Phiếu Trả" }));
+        cbType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sách", "Phiếu Mượn", "Phiếu Trả", "Thẻ Thư Viện" }));
         cbType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTypeActionPerformed(evt);
@@ -273,6 +274,12 @@ public class TimKiem extends javax.swing.JPanel {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm phiếu trả: " + e.getMessage());
             }
+        } else if (selectedType.equals("Thẻ Thư Viện")) {
+            try {
+                loadSinhVienToTable(key);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm sinh viên: " + e.getMessage());
+            }
         }
     }//GEN-LAST:event_btnSearchActionPerformed
     private void loadPhieuDaTraToTable(String key) {
@@ -328,6 +335,53 @@ public class TimKiem extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Lỗi: " + ex.getMessage());
         }
     }
+
+    private void loadSinhVienToTable(String key) {
+        timKiemDao dao = new timKiemDao();
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"Mã SV", "Tên SV", "Năm Sinh", "SĐT", "Mã Lớp", "Tuổi", "Tên Lớp"});
+        try {
+            List<SinhVien> list = dao.searchSinhVienByName(key);
+            try (Connection con = KetNoiCSDL.getConnection()) {
+                for (SinhVien sv : list) {
+                    // Lấy tên lớp từ mã lớp
+                    String tenLop = "Không xác định";
+                    String sqlLop = "SELECT TenLop FROM Lop WHERE MaLop = ?";
+                    try (PreparedStatement pstmLop = con.prepareStatement(sqlLop)) {
+                        pstmLop.setInt(1, sv.getMaLop());
+                        try (ResultSet rsLop = pstmLop.executeQuery()) {
+                            if (rsLop.next()) {
+                                tenLop = rsLop.getString("TenLop");
+                            }
+                        }
+                    }
+
+                    model.addRow(new Object[]{
+                        sv.getMaSV(),
+                        sv.getTenSV(),
+                        sv.getNamSinh(),
+                        sv.getSDT(),
+                        sv.getMaLop(),
+                        sv.getTuoi(),
+                        tenLop
+                    });
+                }
+            }
+            tblSearch.setModel(model);
+            tblSearch.setRowHeight(30);
+            tblSearch.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            tblSearch.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tblSearch.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tblSearch.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblSearch.getColumnModel().getColumn(3).setPreferredWidth(120);
+            tblSearch.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tblSearch.getColumnModel().getColumn(5).setPreferredWidth(80);
+            tblSearch.getColumnModel().getColumn(6).setPreferredWidth(150);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi: " + ex.getMessage());
+        }
+    }
+
     private void cbTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbTypeActionPerformed

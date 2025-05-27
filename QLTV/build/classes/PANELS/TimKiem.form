@@ -65,10 +65,11 @@
     <Component class="javax.swing.JComboBox" name="cbType">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
+          <StringArray count="4">
             <StringItem index="0" value="S&#xe1;ch"/>
             <StringItem index="1" value="Phi&#x1ebf;u M&#x1b0;&#x1ee3;n"/>
             <StringItem index="2" value="Phi&#x1ebf;u Tr&#x1ea3;"/>
+            <StringItem index="3" value="Th&#x1ebb; Th&#x1b0; Vi&#x1ec7;n"/>
           </StringArray>
         </Property>
       </Properties>

@@ -30,63 +30,62 @@ public class Sach extends javax.swing.JPanel {
     /**
      * Creates new form Sach
      */
-    
     private DefaultTableModel tblModel;
     List<SachDTO> list = new ArrayList<>();
     String imgPath = "";
     private List<TheLoai> listTheLoai;
     private List<NhaXuatBan> listNXB;
+
     public Sach() {
         initComponents();
         loadTheLoai();
         loadNXB();
         loadDataToTable();
     }
-    
+
     private void loadDataToTable() {
-    try {
-        tblModel = (DefaultTableModel) tblSach.getModel(); // Đảm bảo JTable tên là tblSach
-        tblModel.setRowCount(0);
+        try {
+            tblModel = (DefaultTableModel) tblSach.getModel();
+            tblModel.setRowCount(0);
 
-        SachDAO dao = new SachDAO();
-        List<SachDTO> list = dao.GetAllSach();
+            SachDAO dao = new SachDAO();
+            List<SachDTO> list = dao.GetAllSach();
 
-        for (SachDTO s : list) {
-            Object[] newRow = new Object[]{
-                s.getMaSach(),
-                s.getTenSach(),
-                s.getTacGia(),
-                s.getNamXB(),
-                s.getNXB(),    
-                s.getTheLoai(), 
-                s.getSoLuong(),
-                s.getHinhAnh()
-            };
-            tblModel.addRow(newRow);
+            for (SachDTO s : list) {
+                Object[] newRow = new Object[]{
+                    s.getMaSach(),
+                    s.getTenSach(),
+                    s.getTacGia(),
+                    s.getNamXB(),
+                    s.getNXB(),
+                    s.getTheLoai(),
+                    s.getSoLuong(),
+                    s.getHinhAnh()
+                };
+                tblModel.addRow(newRow);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
 
-    
-public void loadTheLoai() {
-    TheLoaiDAO dao = new TheLoaiDAO();
-    listTheLoai = dao.getAll(); // Lưu vào listTheLoai
-    cboTheLoai.removeAllItems();
-    for (TheLoai tl : listTheLoai) {
-        cboTheLoai.addItem(tl.getTen());
+    public void loadTheLoai() {
+        TheLoaiDAO dao = new TheLoaiDAO();
+        listTheLoai = dao.getAll();
+        cboTheLoai.removeAllItems();
+        for (TheLoai tl : listTheLoai) {
+            cboTheLoai.addItem(tl.getTen());
+        }
     }
-}
-  
-public void loadNXB() {
-    NhaXuatBanDAO dao = new NhaXuatBanDAO();
-    listNXB = dao.getAll(); // Lưu vào listNXB
-    cboNhaXuatBan.removeAllItems();
-    for (NhaXuatBan nxb : listNXB) {
-        cboNhaXuatBan.addItem(nxb.getTenNXB());
+
+    public void loadNXB() {
+        NhaXuatBanDAO dao = new NhaXuatBanDAO();
+        listNXB = dao.getAll();
+        cboNhaXuatBan.removeAllItems();
+        for (NhaXuatBan nxb : listNXB) {
+            cboNhaXuatBan.addItem(nxb.getTenNXB());
+        }
     }
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -199,7 +198,7 @@ public void loadNXB() {
                             .addComponent(cboTheLoai, 0, 144, Short.MAX_VALUE)
                             .addComponent(cboNhaXuatBan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtTacGia))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
@@ -212,9 +211,8 @@ public void loadNXB() {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnSua)
                         .addGap(37, 37, 37)
-                        .addComponent(btnXoa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(34, 34, 34))
+                        .addComponent(btnXoa)))
+                .addGap(19, 19, 19))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,8 +298,9 @@ public void loadNXB() {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblHinhAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblHinhAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,13 +320,13 @@ public void loadNXB() {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1))))
-                .addContainerGap(35, Short.MAX_VALUE))
+                                .addGap(0, 0, 0)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,17 +346,17 @@ public void loadNXB() {
     private void cboTheLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTheLoaiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboTheLoaiActionPerformed
-    
+
     private int getMaTheLoaiByTen(String tenTheLoai) {
-    TheLoaiDAO dao = new TheLoaiDAO();
-    List<TheLoai> list = dao.getAll();
-    for (TheLoai tl : list) {
-        if (tl.getTen().equals(tenTheLoai)) {
-            return tl.getMa();
+        TheLoaiDAO dao = new TheLoaiDAO();
+        List<TheLoai> list = dao.getAll();
+        for (TheLoai tl : list) {
+            if (tl.getTen().equals(tenTheLoai)) {
+                return tl.getMa();
+            }
         }
+        return -1;
     }
-    return -1; // hoặc xử lý khác nếu không tìm thấy
-}
 
     private int getMaNXBByTen(String tenNXB) {
         NhaXuatBanDAO dao = new NhaXuatBanDAO();
@@ -369,77 +368,115 @@ public void loadNXB() {
         }
         return -1; // hoặc xử lý khác nếu không tìm thấy
     }
-    
+
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         try {
-        // 1. Lấy dữ liệu từ form
-        String tenSach = txtTenSach.getText();
-        String tacGia = txtTacGia.getText();
-        int namXB = Integer.parseInt(txtNamXuatBan.getText());
-        int soLuong = Integer.parseInt(txtSoLuong.getText());
-        String tenTheLoai = (String) cboTheLoai.getSelectedItem();
-        String tenNXB = (String) cboNhaXuatBan.getSelectedItem();
+            // 1. Lấy dữ liệu từ form
+            String tenSach = txtTenSach.getText().trim();
+            String tacGia = txtTacGia.getText().trim();
+            String strNamXB = txtNamXuatBan.getText().trim();
+            String strSoLuong = txtSoLuong.getText().trim();
+            String tenTheLoai = (String) cboTheLoai.getSelectedItem();
+            String tenNXB = (String) cboNhaXuatBan.getSelectedItem();
 
-        // 2. Lấy mã TheLoai và NhaXuatBan dựa trên tên đã chọn
-        int maTheLoai = getMaTheLoaiByTen(tenTheLoai);
-        int maNXB = getMaNXBByTen(tenNXB);
+            // 2. Ràng buộc kiểm tra dữ liệu
+            if (tenSach.isEmpty() || tacGia.isEmpty() || strNamXB.isEmpty() || strSoLuong.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+                return;
+            }
 
-        // 3. Tạo đối tượng Sach mới
-        SachDTO sachMoi = new SachDTO();
-        sachMoi.setTenSach(tenSach);
-        sachMoi.setTacGia(tacGia);
-        sachMoi.setNamXB(namXB);
-        sachMoi.setSoLuong(soLuong);
-        sachMoi.setTheLoai(maTheLoai);
-        sachMoi.setNXB(maNXB);
-        sachMoi.setHinhAnh(imgPath); // 👈 Thêm dòng này để lưu đường dẫn ảnh
+            int namXB;
+            int soLuong;
 
-        // 4. Gọi DAO lưu vào CSDL
-        SachDAO sachDAO = new SachDAO();
-        boolean ketQua = sachDAO.InsertSach(sachMoi);
+            try {
+                namXB = Integer.parseInt(strNamXB);
+                if (namXB < 0) {
+                    JOptionPane.showMessageDialog(this, "Năm xuất bản không được âm!");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Năm xuất bản phải là số nguyên!");
+                return;
+            }
 
-        if (ketQua) {
-            JOptionPane.showMessageDialog(this, "Thêm sách thành công!");
-            loadDataToTable();
-            // Gọi hàm refresh hoặc clear form nếu muốn
-        } else {
-            JOptionPane.showMessageDialog(this, "Thêm sách thất bại!");
-        }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Năm xuất bản hoặc số lượng phải là số nguyên!");
+            try {
+                soLuong = Integer.parseInt(strSoLuong);
+                if (soLuong < 0) {
+                    JOptionPane.showMessageDialog(this, "Số lượng không được âm!");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Số lượng phải là số nguyên!");
+                return;
+            }
+
+            if (tenTheLoai == null || tenTheLoai.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn thể loại!");
+                return;
+            }
+
+            if (tenNXB == null || tenNXB.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà xuất bản!");
+                return;
+            }
+
+            // 3. Lấy mã thể loại và NXB từ tên
+            int maTheLoai = getMaTheLoaiByTen(tenTheLoai);
+            int maNXB = getMaNXBByTen(tenNXB);
+
+            // 4. Tạo đối tượng sách mới
+            SachDTO sachMoi = new SachDTO();
+            sachMoi.setTenSach(tenSach);
+            sachMoi.setTacGia(tacGia);
+            sachMoi.setNamXB(namXB);
+            sachMoi.setSoLuong(soLuong);
+            sachMoi.setTheLoai(maTheLoai);
+            sachMoi.setNXB(maNXB);
+            sachMoi.setHinhAnh(imgPath); // Lưu ảnh nếu có
+
+            // 5. Gọi DAO lưu vào CSDL
+            SachDAO sachDAO = new SachDAO();
+            boolean ketQua = sachDAO.InsertSach(sachMoi);
+
+            if (ketQua) {
+                JOptionPane.showMessageDialog(this, "Thêm sách thành công!");
+                loadDataToTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm sách thất bại!");
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
         }
     }//GEN-LAST:event_btnThemActionPerformed
-    
+
     private void displayImage(String imagePath) {
-    if (imagePath != null && !imagePath.isEmpty()) {
-        File file = new File("src\\images\\" + imagePath);
-        if (file.exists()) {
-            ImageIcon imageIcon = new ImageIcon(file.getAbsolutePath());
-            Image image = imageIcon.getImage().getScaledInstance(lblHinhAnh.getWidth(), lblHinhAnh.getHeight(), Image.SCALE_SMOOTH);
-            lblHinhAnh.setIcon(new ImageIcon(image));
+        if (imagePath != null && !imagePath.isEmpty()) {
+            File file = new File("src\\images\\" + imagePath);
+            if (file.exists()) {
+                ImageIcon imageIcon = new ImageIcon(file.getAbsolutePath());
+                Image image = imageIcon.getImage().getScaledInstance(lblHinhAnh.getWidth(), lblHinhAnh.getHeight(), Image.SCALE_SMOOTH);
+                lblHinhAnh.setIcon(new ImageIcon(image));
+            } else {
+                lblHinhAnh.setIcon(null);
+            }
         } else {
             lblHinhAnh.setIcon(null);
         }
-    } else {
-        lblHinhAnh.setIcon(null);
     }
-    }
-     
+
     private void btnUploadImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadImageActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         String defaultPath = "src\\Images";
         fileChooser.setCurrentDirectory(new File(defaultPath));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images","jpg","png","gif","jpeg");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "png", "gif", "jpeg");
         fileChooser.setFileFilter(filter);
         int result = fileChooser.showOpenDialog(null);
-        if(result == JFileChooser.APPROVE_OPTION){
+        if (result == JFileChooser.APPROVE_OPTION) {
             String filePath = fileChooser.getSelectedFile().getAbsolutePath();
             imgPath = fileChooser.getSelectedFile().getName();
             displayImage(imgPath);
         }
-        
+
     }//GEN-LAST:event_btnUploadImageActionPerformed
 
     private String getTenTheLoaiByMa(int maTheLoai) {
@@ -463,52 +500,52 @@ public void loadNXB() {
         }
         return "";
     }
-    
+
     private void tblSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSachMouseClicked
-       int selectedRow = tblSach.getSelectedRow();
-    if (selectedRow < 0) {
-        return; // Thoát nếu không có hàng nào được chọn
-    }
-
-    try {
-        // 1. Lấy dữ liệu từ JTable
-        String maSachStr = tblSach.getValueAt(selectedRow, 0).toString();
-        String tenSach = tblSach.getValueAt(selectedRow, 1).toString();
-        String tacGia = tblSach.getValueAt(selectedRow, 2).toString();
-        String namXBStr = tblSach.getValueAt(selectedRow, 3).toString();
-        String maNXBStr = tblSach.getValueAt(selectedRow, 4).toString();
-        String maTheLoaiStr = tblSach.getValueAt(selectedRow, 5).toString();
-        String soLuongStr = tblSach.getValueAt(selectedRow, 6).toString();
-        String hinhAnh = tblSach.getValueAt(selectedRow, 7) != null ? tblSach.getValueAt(selectedRow, 7).toString() : "";
-
-        // 2. Gán dữ liệu lên form
-        txtTenSach.setText(tenSach);
-        txtTacGia.setText(tacGia);
-        txtNamXuatBan.setText(namXBStr);
-        txtSoLuong.setText(soLuongStr);
-
-        // 3. Gán ComboBox
-        int maTheLoai = Integer.parseInt(maTheLoaiStr);
-        int maNXB = Integer.parseInt(maNXBStr);
-        cboTheLoai.setSelectedItem(getTenTheLoaiByMa(maTheLoai));
-        cboNhaXuatBan.setSelectedItem(getTenNXBByMa(maNXB));
-
-        // 4. Hiển thị ảnh
-        imgPath = hinhAnh; // Lưu đường dẫn ảnh
-        if (!hinhAnh.isEmpty()) {
-            displayImage(hinhAnh); // Sử dụng hàm displayImage có sẵn
-        } else {
-            lblHinhAnh.setIcon(null); // Xóa ảnh nếu không có
+        int selectedRow = tblSach.getSelectedRow();
+        if (selectedRow < 0) {
+            return; // Thoát nếu không có hàng nào được chọn
         }
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ: " + ex.getMessage());
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
-    }
+
+        try {
+            // 1. Lấy dữ liệu từ JTable
+            String maSachStr = tblSach.getValueAt(selectedRow, 0).toString();
+            String tenSach = tblSach.getValueAt(selectedRow, 1).toString();
+            String tacGia = tblSach.getValueAt(selectedRow, 2).toString();
+            String namXBStr = tblSach.getValueAt(selectedRow, 3).toString();
+            String maNXBStr = tblSach.getValueAt(selectedRow, 4).toString();
+            String maTheLoaiStr = tblSach.getValueAt(selectedRow, 5).toString();
+            String soLuongStr = tblSach.getValueAt(selectedRow, 6).toString();
+            String hinhAnh = tblSach.getValueAt(selectedRow, 7) != null ? tblSach.getValueAt(selectedRow, 7).toString() : "";
+
+            // 2. Gán dữ liệu lên form
+            txtTenSach.setText(tenSach);
+            txtTacGia.setText(tacGia);
+            txtNamXuatBan.setText(namXBStr);
+            txtSoLuong.setText(soLuongStr);
+
+            // 3. Gán ComboBox
+            int maTheLoai = Integer.parseInt(maTheLoaiStr);
+            int maNXB = Integer.parseInt(maNXBStr);
+            cboTheLoai.setSelectedItem(getTenTheLoaiByMa(maTheLoai));
+            cboNhaXuatBan.setSelectedItem(getTenNXBByMa(maNXB));
+
+            // 4. Hiển thị ảnh
+            imgPath = hinhAnh; // Lưu đường dẫn ảnh
+            if (!hinhAnh.isEmpty()) {
+                displayImage(hinhAnh); // Sử dụng hàm displayImage có sẵn
+            } else {
+                lblHinhAnh.setIcon(null); // Xóa ảnh nếu không có
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ: " + ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
+        }
     }//GEN-LAST:event_tblSachMouseClicked
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-       try {
+        try {
             int selectedRow = tblSach.getSelectedRow();
             if (selectedRow < 0) {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn một sách để sửa!");
@@ -525,13 +562,46 @@ public void loadNXB() {
             String tenTheLoai = (String) cboTheLoai.getSelectedItem();
             String tenNXB = (String) cboNhaXuatBan.getSelectedItem();
 
-            if (tenSach.isEmpty() || tacGia.isEmpty() || namXBStr.isEmpty() || soLuongStr.isEmpty() || tenTheLoai == null || tenNXB == null) {
-                JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin!");
+            // Kiểm tra dữ liệu nhập vào
+            if (tenSach.isEmpty() || tacGia.isEmpty() || namXBStr.isEmpty() || soLuongStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
                 return;
             }
 
-            int namXB = Integer.parseInt(namXBStr);
-            int soLuong = Integer.parseInt(soLuongStr);
+            int namXB;
+            int soLuong;
+
+            try {
+                namXB = Integer.parseInt(namXBStr);
+                if (namXB < 0) {
+                    JOptionPane.showMessageDialog(this, "Năm xuất bản không được âm!");
+                    return;
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Năm xuất bản phải là số nguyên!");
+                return;
+            }
+
+            try {
+                soLuong = Integer.parseInt(soLuongStr);
+                if (soLuong < 0) {
+                    JOptionPane.showMessageDialog(this, "Số lượng không được âm!");
+                    return;
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Số lượng phải là số nguyên!");
+                return;
+            }
+
+            if (tenTheLoai == null || tenTheLoai.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn thể loại!");
+                return;
+            }
+
+            if (tenNXB == null || tenNXB.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà xuất bản!");
+                return;
+            }
 
             int maTheLoai = getMaTheLoaiByTen(tenTheLoai);
             int maNXB = getMaNXBByTen(tenNXB);
@@ -541,6 +611,7 @@ public void loadNXB() {
                 return;
             }
 
+            // Tạo đối tượng sách và gán dữ liệu
             SachDTO sach = new SachDTO();
             sach.setMaSach(maSach);
             sach.setTenSach(tenSach);
@@ -549,19 +620,19 @@ public void loadNXB() {
             sach.setSoLuong(soLuong);
             sach.setTheLoai(maTheLoai);
             sach.setNXB(maNXB);
-            sach.setHinhAnh(imgPath);
+            sach.setHinhAnh(imgPath); 
 
+            // Gọi DAO để cập nhật
             SachDAO sachDAO = new SachDAO();
             boolean ketQua = sachDAO.UpdateSach(sach);
 
             if (ketQua) {
                 JOptionPane.showMessageDialog(this, "Sửa sách thành công!");
-                loadDataToTable(); 
+                loadDataToTable();
             } else {
                 JOptionPane.showMessageDialog(this, "Sửa sách thất bại!");
             }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Năm xuất bản hoặc số lượng phải là số nguyên!");
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
         }
@@ -569,39 +640,39 @@ public void loadNXB() {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         try {
-        int selectedRow = tblSach.getSelectedRow();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sách để xóa!", "Lỗi", JOptionPane.WARNING_MESSAGE);
-            return;
+            int selectedRow = tblSach.getSelectedRow();
+            if (selectedRow < 0) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn một sách để xóa!", "Lỗi", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String maSachStr = tblSach.getValueAt(selectedRow, 0).toString();
+            int maSach = Integer.parseInt(maSachStr);
+
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Bạn có chắc chắn muốn xóa sách có mã " + maSach + "?",
+                    "Xác nhận xóa",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+            if (confirm != JOptionPane.YES_OPTION) {
+                return;
+            }
+
+            SachDAO sachDAO = new SachDAO();
+            boolean ketQua = sachDAO.DeleteSach(maSach);
+
+            if (ketQua) {
+                JOptionPane.showMessageDialog(this, "Xóa sách thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                loadDataToTable();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa sách thất bại! Vui lòng kiểm tra lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Mã sách không hợp lệ!", "Lỗi", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi hệ thống: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-
-        String maSachStr = tblSach.getValueAt(selectedRow, 0).toString();
-        int maSach = Integer.parseInt(maSachStr);
-
-        int confirm = JOptionPane.showConfirmDialog(this, 
-            "Bạn có chắc chắn muốn xóa sách có mã " + maSach + "?", 
-            "Xác nhận xóa", 
-            JOptionPane.YES_NO_OPTION, 
-            JOptionPane.QUESTION_MESSAGE);
-        if (confirm != JOptionPane.YES_OPTION) {
-            return;
-        }
-
-        SachDAO sachDAO = new SachDAO();
-        boolean ketQua = sachDAO.DeleteSach(maSach);
-
-        if (ketQua) {
-            JOptionPane.showMessageDialog(this, "Xóa sách thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-            loadDataToTable(); 
-            
-        } else {
-            JOptionPane.showMessageDialog(this, "Xóa sách thất bại! Vui lòng kiểm tra lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        }
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Mã sách không hợp lệ!", "Lỗi", JOptionPane.WARNING_MESSAGE);
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Lỗi hệ thống: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-    }
     }//GEN-LAST:event_btnXoaActionPerformed
 
 

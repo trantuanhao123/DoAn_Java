@@ -168,16 +168,34 @@ public class NXB extends javax.swing.JPanel {
     }//GEN-LAST:event_tblNXBMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        NhaXuatBan nxb = new NhaXuatBan();
-        nxb.setTenNXB(txtTen.getText());
-        nxb.setDiaChi(txtDiaChi.getText());
-        NhaXuatBanDAO nxbDao = new NhaXuatBanDAO();
-        int x = nxbDao.themNXB(nxb);
-        if (x > 0) {
-            JOptionPane.showMessageDialog(this, "Thêm nhà xuất bản mới thành công");
-            loadNXBToTable();
-        } else {
-            JOptionPane.showMessageDialog(this, "Thêm nhà xuất bản mới thất bại");
+        try {
+            String tenNXB = txtTen.getText().trim();
+            String diaChi = txtDiaChi.getText().trim();
+
+            if (tenNXB.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhà xuất bản!");
+                return;
+            }
+            if (diaChi.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập địa chỉ nhà xuất bản!");
+                return;
+            }
+
+            NhaXuatBan nxb = new NhaXuatBan();
+            nxb.setTenNXB(tenNXB);
+            nxb.setDiaChi(diaChi);
+
+            NhaXuatBanDAO nxbDao = new NhaXuatBanDAO();
+            int x = nxbDao.themNXB(nxb);
+
+            if (x > 0) {
+                JOptionPane.showMessageDialog(this, "Thêm nhà xuất bản mới thành công");
+                loadNXBToTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm nhà xuất bản mới thất bại");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + e.getMessage());
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -208,21 +226,40 @@ public class NXB extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        int selectedRow = tblNXB.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn một nhà xuất bản để cập nhật.");
-            return;
-        }
-        NhaXuatBan nxb = listNXB.get(selectedRow);
-        NhaXuatBanDAO nxbDAO = new NhaXuatBanDAO();
-        nxb.setTenNXB(txtTen.getText());
-        nxb.setDiaChi(txtDiaChi.getText());
-        int x = nxbDAO.suaNXB(nxb);
-        if (x > 0) {
-            JOptionPane.showMessageDialog(this, "Cập nhật nhà xuất bản thành công");
-            loadNXBToTable();
-        } else {
-            JOptionPane.showMessageDialog(this, "Cập nhật nhà xuất bản thất bại");
+        try {
+            int selectedRow = tblNXB.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn một nhà xuất bản để cập nhật.");
+                return;
+            }
+
+            String tenNXB = txtTen.getText().trim();
+            String diaChi = txtDiaChi.getText().trim();
+
+            if (tenNXB.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhà xuất bản!");
+                return;
+            }
+            if (diaChi.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập địa chỉ nhà xuất bản!");
+                return;
+            }
+
+            NhaXuatBan nxb = listNXB.get(selectedRow);
+            nxb.setTenNXB(tenNXB);
+            nxb.setDiaChi(diaChi);
+
+            NhaXuatBanDAO nxbDAO = new NhaXuatBanDAO();
+            int x = nxbDAO.suaNXB(nxb);
+
+            if (x > 0) {
+                JOptionPane.showMessageDialog(this, "Cập nhật nhà xuất bản thành công");
+                loadNXBToTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Cập nhật nhà xuất bản thất bại");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi cập nhật: " + e.getMessage());
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 

@@ -110,6 +110,7 @@ public class SinhVienPanel extends javax.swing.JPanel {
 
         cboLop.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        btnInit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Add.png"))); // NOI18N
         btnInit.setText("Làm Mới");
         btnInit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,6 +118,7 @@ public class SinhVienPanel extends javax.swing.JPanel {
             }
         });
 
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Add.png"))); // NOI18N
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,6 +126,7 @@ public class SinhVienPanel extends javax.swing.JPanel {
             }
         });
 
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Delete.png"))); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,6 +134,7 @@ public class SinhVienPanel extends javax.swing.JPanel {
             }
         });
 
+        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Repair.png"))); // NOI18N
         btnSua.setText("Sửa");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,7 +192,7 @@ public class SinhVienPanel extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnXoa)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnSua)
+                                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtTenSV)
                             .addComponent(txtNamSinh)
@@ -221,14 +225,15 @@ public class SinhVienPanel extends javax.swing.JPanel {
                     .addComponent(jLabel6)
                     .addComponent(txtTuoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInit)
-                    .addComponent(btnSua)
-                    .addComponent(btnThem)
-                    .addComponent(btnXoa))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnInit)
+                        .addComponent(btnThem)
+                        .addComponent(btnXoa))
+                    .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -261,23 +266,55 @@ public class SinhVienPanel extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         try {
-            SinhVien sv = new SinhVien();
-            sinhVienDAO svDAO = new sinhVienDAO();
-            sv.setTenSV(txtTenSV.getText());
-            sv.setTuoi(Integer.parseInt(txtTuoi.getText()));
-            sv.setNamSinh(Integer.parseInt(txtTuoi.getText()));
-            sv.setSDT(txtSDT.getText());
+            String tenSV = txtTenSV.getText().trim();
+            String tuoiStr = txtTuoi.getText().trim();
+            String namSinhStr = txtNamSinh.getText().trim();
+            String sdt = txtSDT.getText().trim();
             Lop lop = (Lop) cboLop.getSelectedItem();
+
+            // Kiểm tra dữ liệu trống
+            if (tenSV.isEmpty() || tuoiStr.isEmpty() || namSinhStr.isEmpty() || sdt.isEmpty() || lop == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin sinh viên!");
+                return;
+            }
+
+            // Kiểm tra số hợp lệ
+            int tuoi = Integer.parseInt(tuoiStr);
+            int namSinh = Integer.parseInt(namSinhStr);
+
+            if (tuoi <= 0 || namSinh <= 0) {
+                JOptionPane.showMessageDialog(this, "Tuổi và năm sinh phải là số nguyên dương!");
+                return;
+            }
+
+            // Kiểm tra số điện thoại
+            if (!sdt.matches("\\d{9,11}")) {
+                JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ! (phải từ 9 đến 11 chữ số)");
+                return;
+            }
+
+            // Tạo đối tượng sinh viên
+            SinhVien sv = new SinhVien();
+            sv.setTenSV(tenSV);
+            sv.setTuoi(tuoi);
+            sv.setNamSinh(namSinh);
+            sv.setSDT(sdt);
             sv.setMaLop(lop.getMaLop());
+
+            // Gọi DAO để thêm sinh viên
+            sinhVienDAO svDAO = new sinhVienDAO();
             int index = svDAO.themSinhVien(sv);
+
             if (index > 0) {
-                JOptionPane.showMessageDialog(this, "Thêm thành công");
+                JOptionPane.showMessageDialog(this, "Thêm sinh viên thành công!");
                 loadDataToTable();
             } else {
-                JOptionPane.showMessageDialog(this, "Thêm thất bại");
+                JOptionPane.showMessageDialog(this, "Thêm sinh viên thất bại!");
             }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Tuổi và năm sinh phải là số nguyên!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi thêm thẻ thư viện");
+            JOptionPane.showMessageDialog(this, "Lỗi khi thêm sinh viên: " + e.getMessage());
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -308,26 +345,71 @@ public class SinhVienPanel extends javax.swing.JPanel {
         int row = tblSinhVien.getSelectedRow();
         sinhVienDAO svDAO = new sinhVienDAO();
         if (row < 0) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn thẻ thư viện muốn xóa");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn thẻ thư viện muốn cập nhật");
             return;
         }
+
         try {
-            SinhVien sv = listSV.get(row);
-            sv.setTenSV(txtTenSV.getText());
-            sv.setTuoi(Integer.parseInt(txtTuoi.getText()));
-            sv.setNamSinh(Integer.parseInt(txtTuoi.getText()));
-            sv.setSDT(txtSDT.getText());
+            String tenSV = txtTenSV.getText().trim();
+            String tuoiStr = txtTuoi.getText().trim();
+            String sdt = txtSDT.getText().trim();
             Lop lop = (Lop) cboLop.getSelectedItem();
+
+            if (tenSV.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập tên sinh viên!");
+                return;
+            }
+
+            if (tuoiStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập tuổi sinh viên!");
+                return;
+            }
+
+            int tuoi = Integer.parseInt(tuoiStr);
+
+            if (tuoi <= 0 || tuoi > 150) {
+                JOptionPane.showMessageDialog(this, "Tuổi không hợp lệ! (1 - 150)");
+                return;
+            }
+
+            if (sdt.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại!");
+                return;
+            }
+
+            if (!sdt.matches("\\d{9,11}")) {
+                JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ! (phải từ 9 đến 11 chữ số)");
+                return;
+            }
+
+            if (lop == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn lớp!");
+                return;
+            }
+
+            SinhVien sv = listSV.get(row);
+            sv.setTenSV(tenSV);
+            sv.setTuoi(tuoi);
+
+            // Nếu bạn muốn tính năm sinh từ tuổi (ví dụ hiện tại là 2025)
+            int currentYear = java.time.Year.now().getValue();
+            int namSinh = currentYear - tuoi;
+            sv.setNamSinh(namSinh);
+
+            sv.setSDT(sdt);
             sv.setMaLop(lop.getMaLop());
+
             int index = svDAO.capNhatSinhVien(sv);
             if (index > 0) {
-                JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+                JOptionPane.showMessageDialog(this, "Cập nhật thẻ thư viện thành công");
                 loadDataToTable();
             } else {
-                JOptionPane.showMessageDialog(this, "Cập nhật thất bại");
+                JOptionPane.showMessageDialog(this, "Cập nhật thẻ thư viện thất bại");
             }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Tuổi phải là số nguyên!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật thẻ thư viện");
+            JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật thẻ thư viện: " + e.getMessage());
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 

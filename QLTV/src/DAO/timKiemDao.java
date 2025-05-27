@@ -6,6 +6,7 @@ package DAO;
 
 import MODELS.Phieu;
 import MODELS.SachDTO;
+import MODELS.SinhVien;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -74,13 +75,13 @@ public class timKiemDao {
         }
         return list;
     }
+
     public List<Phieu> searchPhieuTra(String key) throws Exception {
-        String sql = "SELECT p.MaPhieu, p.MaSV, p.NgayMuon, p.MaThuThu, p.TrangThai " +
-                     "FROM Phieu p JOIN SinhVien sv ON p.MaSV = sv.MaSV " +
-                     "WHERE sv.TenSV LIKE ? AND p.TrangThai = N'Đã trả'";
+        String sql = "SELECT p.MaPhieu, p.MaSV, p.NgayMuon, p.MaThuThu, p.TrangThai "
+                + "FROM Phieu p JOIN SinhVien sv ON p.MaSV = sv.MaSV "
+                + "WHERE sv.TenSV LIKE ? AND p.TrangThai = N'Đã trả'";
         List<Phieu> list = new ArrayList<>();
-        try (Connection con = KetNoiCSDL.getConnection();
-             PreparedStatement pstm = con.prepareStatement(sql)) {
+        try (Connection con = KetNoiCSDL.getConnection(); PreparedStatement pstm = con.prepareStatement(sql)) {
             pstm.setString(1, "%" + key + "%");
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
@@ -91,6 +92,29 @@ public class timKiemDao {
                 phieu.setMaThuThu(rs.getInt("MaThuThu"));
                 phieu.setTrangThai(rs.getString("TrangThai"));
                 list.add(phieu);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return list;
+    }
+
+    public List<SinhVien> searchSinhVienByName(String key) throws Exception {
+        String sql = "SELECT MaSV, TenSV, NamSinh, SDT, MaLop, Tuoi FROM SinhVien WHERE TenSV LIKE ?";
+        List<SinhVien> list = new ArrayList<>();
+        try (Connection con = KetNoiCSDL.getConnection(); PreparedStatement pstm = con.prepareStatement(sql)) {
+            pstm.setString(1, "%" + key + "%");
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                SinhVien sv = new SinhVien();
+                sv.setMaSV(rs.getInt("MaSV"));
+                sv.setTenSV(rs.getString("TenSV"));
+                sv.setNamSinh(rs.getInt("NamSinh"));
+                sv.setSDT(rs.getString("SDT"));
+                sv.setMaLop(rs.getInt("MaLop"));
+                sv.setTuoi(rs.getInt("Tuoi"));
+                list.add(sv);
             }
         } catch (Exception e) {
             e.printStackTrace();
