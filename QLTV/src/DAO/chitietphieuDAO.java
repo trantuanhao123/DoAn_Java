@@ -36,6 +36,29 @@ public class chitietphieuDAO {
         return list;
     }
 
+    public List<ChiTietPhieu> findAllByMaPhieu(int maPhieu) throws Exception {
+        List<ChiTietPhieu> list = new ArrayList<>();
+        String sql = "SELECT * FROM ChiTietPhieu WHERE maPhieu = ?";
+
+        try (Connection conn = KetNoiCSDL.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, maPhieu);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ChiTietPhieu ct = new ChiTietPhieu();
+                    ct.setMaPhieu(rs.getInt("maPhieu"));
+                    ct.setMaSach(rs.getInt("maSach"));
+                    ct.setSoLuongMuon(rs.getInt("soLuongMuon"));
+                    ct.setNgayTra(rs.getString("ngayTra"));
+                    list.add(ct);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
     public ChiTietPhieu findByMaPhieu(int maPhieu) throws Exception {
         String sql = "SELECT * FROM ChiTietPhieu WHERE maPhieu = ?";
         try (Connection conn = KetNoiCSDL.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
